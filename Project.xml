@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Psych Engine" file="PsychEngine" packageName="com.shadowmario.psychengine" package="com.shadowmario.psychengine" main="Main" version="0.2.7" company="ShadowMario" />
+	<app title="Friday Night Funkin': Doki Doki Takeover! - BAD ENDING" file="DokiTakeover" package="com.teamtbd.dokitakeover" main="Main" version="1.0.1" company="Team TBD" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -30,7 +30,7 @@
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
 
 	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="1280" height="720" resizable="false"/>
+	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
 
 	<!--Switch-specific-->
 	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
@@ -42,72 +42,50 @@
 	<set name="BUILD_DIR" value="export/32bit" if="32bits" />
 
 	<classpath name="source" />
-	
-	<!-- PSYCH ENGINE CUSTOMIZATION -->
-	<define name="MODS_ALLOWED" if="desktop || android" />
-	<define name="LUA_ALLOWED" if="desktop || android" />
-	<define name="ACHIEVEMENTS_ALLOWED" />
-	<define name="VIDEOS_ALLOWED" if="web || windows || android" unless="32bits"/>
-	<define name="PSYCH_WATERMARKS" /> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
-	<define name="TITLE_SCREEN_EASTER_EGG" /> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build --> <!-- Edit: i forgot the port is unofficial lmao -->
 
-	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
-	<section if="TITLE_SCREEN_EASTER_EGG">
-		<assets path="assets/secrets" rename="assets" exclude="*.ogg" if="web"/>
-		<assets path="assets/secrets" rename="assets" exclude="*.mp3"  unless="web"/>
-	</section>
+	<!-- PSYCH ENGINE CUSTOMIZATION -->
+	<define name="MODS_ALLOWED" if="desktop" />
+	<define name="LUA_ALLOWED" if="desktop" />
+	<!-- <define name="ACHIEVEMENTS_ALLOWED" /> -->
+	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
+	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS ON TITLE SCREEN -->
 
 	<!-- DONT ENABLE THIS -->
-	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
+	<!-- <define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/> -->
 
 	<!-- <define name="PRELOAD_ALL" /> -->
 	<define name="PRELOAD_ALL" unless="web" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
-	
-	<library name="videos"        preload="true" />
+
+	<library name="videos" preload="true" />
+
 	<section if="PRELOAD_ALL">
-		<library name="songs"         preload="true" />
-		<library name="shared"        preload="true" />
-		<library name="week2"         preload="true" />
-		<library name="week3"         preload="true" />
-		<library name="week4"         preload="true" />
-		<library name="week5"         preload="true" />
-		<library name="week6"         preload="true" />
+		<library name="songs" preload="true" />
+		<library name="shared" preload="true" />
+		<library name="doki" preload="true" />
 	</section>
-	
+
 	<section if="NO_PRELOAD_ALL">
-		<library name="songs"         preload="false" />
-		<library name="shared"        preload="false" />
-		<library name="week2"         preload="false" />
-		<library name="week3"         preload="false" />
-		<library name="week4"         preload="false" />
-		<library name="week5"         preload="false" />
-		<library name="week6"         preload="false" />
+		<library name="songs" preload="false" />
+		<library name="shared" preload="false" />
+		<library name="doki" preload="false" />
 	</section>
-	
-	<assets path="plugins/"             rename=''               if="VIDEOS_ALLOWED windows" />
-	<assets path="dlls/"                rename=''               if="VIDEOS_ALLOWED windows" />
-	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
-	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
-	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/shared"        library="shared"        exclude="*.ogg" if="web"/>
-	<assets path="assets/shared"        library="shared"        exclude="*.mp3" unless="web"/>
-	<assets path="assets/week2"         library="week2"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week2"         library="week2"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week3"         library="week3"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week3"         library="week3"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week4"         library="week4"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week4"         library="week4"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week5"         library="week5"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week5"         library="week5"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week6"         library="week6"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week6"         library="week6"         exclude="*.mp3" unless="web"/>
-	
-	<assets path='example_mods' rename='mods' embed='false' if="MODS_ALLOWED"/>
-	<assets path='art/readme.txt' rename='do NOT readme.txt' />
+
+	<assets path="plugins/" rename='' if="VIDEOS_ALLOWED windows" />
+	<assets path="dlls/" rename='' if="VIDEOS_ALLOWED windows" />
+	<assets path="assets/videos" library="videos" if="VIDEOS_ALLOWED"/>
+
+	<assets path="assets/preload" rename="assets" />
+	<assets path="assets/songs" library="songs" />
+	<assets path="assets/shared" library="shared" />
+	<assets path="assets/doki" library="doki" />
+
+	<!-- <assets path='example_mods' rename='mods' embed='false' if="MODS_ALLOWED"/> -->
+	<assets path='art/readme.txt' rename='fnf_readme.txt' />
+	<!-- <assets path='art/doki-readme.txt' rename='doki_readme.txt'/> -->
+	<assets path='LICENSE' rename='LICENSE.txt' />
 	<!-- <template path='mods' /> -->
-	
+
 	<!-- assets path="CHANGELOG.md" rename='changelog.txt' -->
 
 	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
@@ -125,18 +103,15 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="hscript" />
 
+	<haxelib name="actuate" />
+
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
-	<haxelib name="faxe" if='switch'/>
+	<!-- <haxelib name="faxe" if='switch'/> -->
 	<!--<haxelib name="polymod"/> -->
 	<haxelib name="discord_rpc" if="desktop"/>
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
-        <haxelib name="extension-webview" if="android"/>
-        <haxelib name="AndroidTools" if="android"/>
-
-        <config:android permission="android.permission.READ_EXTERNAL_STORAGE" if="android"/>
-        <config:android permission="android.permission.WRITE_EXTERNAL_STORAGE" if="android"/>
 
 	<!-- <haxelib name="markdown" /> -->
 	<!-- <haxelib name="HtmlParser" /> -->
@@ -176,14 +151,10 @@
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
 
-	<!-- Akways enable Null Object Reference check -->
-	<haxedef name="HXCPP_CHECK_POINTER" if="release" />
-	<haxedef name="HXCPP_STACK_LINE" if="release" />
-
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
-	
+
 	<icon path="art/icon16.png" size='16'/>
 	<icon path="art/icon32.png" size='32'/>
 	<icon path="art/icon64.png" size='64'/>
